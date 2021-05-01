@@ -1,5 +1,5 @@
-# tron-decentralizedbet
-[TRON] Decentralized Bet
+# Decentralized Bet
+[TRON] Multi-token Decentralized Bet
 
 # Contact Us
 Email: support@matchtoken.io <br />
