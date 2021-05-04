@@ -213,7 +213,7 @@ contract DecentralizedBet is Owner{
 
   function getOrderById(uint64 orderId) public view returns(uint256[] memory){
      Order memory order = orders[orderId];
-     uint256[] memory rInt = new uint256[](16);
+     uint256[] memory rInt = new uint256[](17);
      rInt[0] = uint256(order.orderId);
      rInt[1] = uint256(order.matchId);
      rInt[2] = uint256(order.odds);
