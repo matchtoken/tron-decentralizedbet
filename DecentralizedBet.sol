@@ -258,9 +258,11 @@ contract DecentralizedBet is Owner{
        require(order.makerSide == msg.sender,"Invalid Maker Side");
         uint64 pot = order.takerPot;
         uint64 fee = pot.mul(PROVIDER_FEE).div(DIVIDER);
+        if(order.tokenCode==100)
+          fee = 0;
         pot = pot.sub(fee).add(order.makerPot);
 
-        if(reffSystem[order.takerSide].referrer != address(0) && order.tokenCode == 100){
+        if(reffSystem[order.takerSide].referrer != address(0) && order.tokenCode != 100){
           uint64 rFee = fee.mul(REFERRAL_FEE).div(DIVIDER);
           fee = fee.sub(rFee);
           reffSystem[reffSystem[order.takerSide].referrer].claimable = reffSystem[reffSystem[order.takerSide].referrer].claimable.add(rFee);
@@ -275,8 +277,10 @@ contract DecentralizedBet is Owner{
         require(order.takerSide == msg.sender,"Invalid Taker Side");
         uint64 pot = order.makerPot;
         uint64 fee = pot.mul(PROVIDER_FEE).div(DIVIDER);
+        if(order.tokenCode==100)
+          fee = 0;
         pot = pot.sub(fee).add(order.takerPot);
-        if(reffSystem[order.takerSide].referrer != address(0)&& order.tokenCode == 100){
+        if(reffSystem[order.takerSide].referrer != address(0)&& order.tokenCode != 100){
           uint64 rFee = fee.mul(REFERRAL_FEE).div(DIVIDER);
           fee = fee.sub(rFee);
           reffSystem[reffSystem[order.takerSide].referrer].claimable = reffSystem[reffSystem[order.takerSide].referrer].claimable.add(rFee);
