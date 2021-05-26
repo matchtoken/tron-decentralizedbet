@@ -257,16 +257,17 @@ contract DecentralizedBet is Owner{
       if(order.winner == 1){
        require(order.makerSide == msg.sender,"Invalid Maker Side");
         uint64 pot = order.takerPot;
-        uint64 fee = pot.mul(PROVIDER_FEE).div(DIVIDER);
-        if(order.tokenCode==100)
-          fee = 0;
+        uint64 fee = 0;
+        if(allowedTokens[order.tokenCode]._address != matchContract)
+          fee = pot.mul(PROVIDER_FEE).div(DIVIDER);
         pot = pot.sub(fee).add(order.makerPot);
 
-        if(reffSystem[order.takerSide].referrer != address(0) && order.tokenCode != 100){
+        if(reffSystem[order.takerSide].referrer != address(0) && fee > 0){
           uint64 rFee = fee.mul(REFERRAL_FEE).div(DIVIDER);
           fee = fee.sub(rFee);
           reffSystem[reffSystem[order.takerSide].referrer].claimable = reffSystem[reffSystem[order.takerSide].referrer].claimable.add(rFee);
         }
+        if(fee>0)
         trc20.transfer(providerAddress,fee);
         trc20.transfer(msg.sender,pot);
         emit Claimed(msg.sender, order.orderId, pot);
@@ -276,15 +277,16 @@ contract DecentralizedBet is Owner{
       }else if(order.winner == 2){
         require(order.takerSide == msg.sender,"Invalid Taker Side");
         uint64 pot = order.makerPot;
-        uint64 fee = pot.mul(PROVIDER_FEE).div(DIVIDER);
-        if(order.tokenCode==100)
-          fee = 0;
+        uint64 fee = 0;
+        if(allowedTokens[order.tokenCode]._address != matchContract)
+          fee = pot.mul(PROVIDER_FEE).div(DIVIDER);
         pot = pot.sub(fee).add(order.takerPot);
-        if(reffSystem[order.takerSide].referrer != address(0)&& order.tokenCode != 100){
+        if(reffSystem[order.takerSide].referrer != address(0) && fee > 0){
           uint64 rFee = fee.mul(REFERRAL_FEE).div(DIVIDER);
           fee = fee.sub(rFee);
           reffSystem[reffSystem[order.takerSide].referrer].claimable = reffSystem[reffSystem[order.takerSide].referrer].claimable.add(rFee);
         }
+        if(fee>0)
         trc20.transfer(providerAddress,fee);
         trc20.transfer(msg.sender,pot);
         emit Claimed(msg.sender,order.orderId, pot);
