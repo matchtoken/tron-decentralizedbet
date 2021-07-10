@@ -1,4 +1,4 @@
-pragma solidity ^0.5.10;
+pragma solidity ^0.5.17;
 
 library SafeMath {
 
@@ -14,7 +14,7 @@ library SafeMath {
         }
 
         uint256 c = a * b;
-        require(c / a == b);
+        require(c / a == b,"mul error");
 
         return c;
     }
@@ -23,7 +23,7 @@ library SafeMath {
      * @dev Integer division of two numbers truncating the quotient, reverts on division by zero.
      */
     function div(uint256 a, uint256 b) internal pure returns (uint256) {
-        require(b > 0); // Solidity only automatically asserts when dividing by 0
+        require(b > 0,"div error"); // Solidity only automatically asserts when dividing by 0
         uint256 c = a / b;
         // assert(a == b * c + a % b); // There is no case in which this doesn't hold
 
@@ -34,7 +34,7 @@ library SafeMath {
      * @dev Subtracts two numbers, reverts on overflow (i.e. if subtrahend is greater than minuend).
      */
     function sub(uint256 a, uint256 b) internal pure returns (uint256) {
-        require(b <= a);
+        require(b <= a,"sub error");
         uint256 c = a - b;
 
         return c;
@@ -45,7 +45,7 @@ library SafeMath {
      */
     function add(uint256 a, uint256 b) internal pure returns (uint256) {
         uint256 c = a + b;
-        require(c >= a);
+        require(c >= a,"add error");
 
         return c;
     }
@@ -55,7 +55,7 @@ library SafeMath {
      * reverts when dividing by zero.
      */
     function mod(uint256 a, uint256 b) internal pure returns (uint256) {
-        require(b != 0);
+        require(b != 0,"mod error");
         return a % b;
     }
 
@@ -76,7 +76,7 @@ library SafeMath64 {
         }
 
         uint64 c = a * b;
-        require(c / a == b);
+        require(c / a == b,"mul error");
 
         return c;
     }
@@ -85,7 +85,7 @@ library SafeMath64 {
      * @dev Integer division of two numbers truncating the quotient, reverts on division by zero.
      */
     function div(uint64 a, uint64 b) internal pure returns (uint64) {
-        require(b > 0); // Solidity only automatically asserts when dividing by 0
+        require(b > 0,"div error"); // Solidity only automatically asserts when dividing by 0
         uint64 c = a / b;
         // assert(a == b * c + a % b); // There is no case in which this doesn't hold
 
@@ -96,7 +96,7 @@ library SafeMath64 {
      * @dev Subtracts two numbers, reverts on overflow (i.e. if subtrahend is greater than minuend).
      */
     function sub(uint64 a, uint64 b) internal pure returns (uint64) {
-        require(b <= a);
+        require(b <= a,"sub error");
         uint64 c = a - b;
 
         return c;
@@ -107,7 +107,7 @@ library SafeMath64 {
      */
     function add(uint64 a, uint64 b) internal pure returns (uint64) {
         uint64 c = a + b;
-        require(c >= a);
+        require(c >= a,"add error");
 
         return c;
     }
@@ -117,7 +117,7 @@ library SafeMath64 {
      * reverts when dividing by zero.
      */
     function mod(uint64 a, uint64 b) internal pure returns (uint64) {
-        require(b != 0);
+        require(b != 0,"mod error");
         return a % b;
     }
 
