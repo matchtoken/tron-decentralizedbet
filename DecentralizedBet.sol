@@ -175,9 +175,6 @@ contract DecentralizedBet is Owner{
     require(trc20.balanceOf(order.makerSide)>=order.makerPot,"insuf maker b");
     require(trc20.balanceOf(order.takerSide)>=order.takerPot,"insuf taker b");
 
-    trc20.transferFrom(order.makerSide,address(this),order.makerPot);
-    trc20.transferFrom(order.takerSide,address(this),order.takerPot);
-
     order.status = 0;
     orderGroups[orderGroupId].push(order.orderId);
 
@@ -187,6 +184,11 @@ contract DecentralizedBet is Owner{
         reffSystem[msg.sender].referrer = referrer;
       }
     }
+
+    trc20.transferFrom(order.makerSide,address(this),order.makerPot);
+    trc20.transferFrom(order.takerSide,address(this),order.takerPot);
+
+    
    
     return true;
   }
@@ -469,6 +471,11 @@ contract DecentralizedBet is Owner{
     onlyOwner();
     require(_providerAddress != address(0x0),"no 0");
     providerAddress = _providerAddress;
+  }
+
+   function addWatchers(address[] newWatchers) public{
+    onlyOwner();
+    watchers = newWatchers;
   }
 
 }
